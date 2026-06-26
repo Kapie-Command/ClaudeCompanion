@@ -7,6 +7,7 @@ import ContextBlocks from './components/ContextBlocks'
 import ChainRunner from './components/ChainRunner'
 import ClipboardHistory from './components/ClipboardHistory'
 import TemplateEditor from './components/TemplateEditor'
+import QuickAccess from './components/QuickAccess'
 
 export default function App() {
   const hydrate = useStore(s => s.hydrate)
@@ -14,8 +15,15 @@ export default function App() {
   const [editorOpen, setEditorOpen] = useState(false)
   const [editingTemplate, setEditingTemplate] = useState(null)
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [quickAccessOpen, setQuickAccessOpen] = useState(false)
 
   useEffect(() => { hydrate() }, [hydrate])
+
+  useEffect(() => {
+    const api = window.electronAPI
+    if (!api?.quickAccess?.onToggle) return
+    return api.quickAccess.onToggle(() => setQuickAccessOpen(v => !v))
+  }, [])
 
   const openEditor = (template = null) => {
     setEditingTemplate(template)
@@ -57,6 +65,9 @@ export default function App() {
 
       {/* Clipboard history drawer */}
       <ClipboardHistory />
+
+      {/* Quick access overlay */}
+      <QuickAccess visible={quickAccessOpen} onClose={() => setQuickAccessOpen(false)} />
 
       {/* Template editor modal */}
       {editorOpen && (

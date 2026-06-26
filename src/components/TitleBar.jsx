@@ -10,6 +10,13 @@ export default function TitleBar() {
       </span>
       <div className="no-drag flex items-center gap-1">
         <button
+          onClick={() => api.window.toggleDevTools()}
+          className="w-7 h-6 flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-surface-3 rounded transition-colors text-xs"
+          title="Toggle DevTools"
+        >
+          ⚙
+        </button>
+        <button
           onClick={() => api.window.minimize()}
           className="w-7 h-6 flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-surface-3 rounded transition-colors text-xs"
         >
