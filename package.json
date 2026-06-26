@@ -1,0 +1,25 @@
+{
+  "name": "claude-companion",
+  "version": "1.0.0",
+  "description": "Desktop companion tool for Claude Code workflows — quick-copy prompt templates, variable interpolation, prompt chains.",
+  "main": "./dist/main/main.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.21",
+    "electron": "^35.1.0",
+    "electron-vite": "^3.1.0",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^5.0.5"
+  }
+}
