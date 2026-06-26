@@ -68,8 +68,6 @@ function createWindow() {
     mainWindow.loadFile(path.join(__dirname, '..', 'renderer', 'index.html'))
   }
 
-  mainWindow.webContents.openDevTools({ mode: 'detach' })
-
   mainWindow.on('close', (e) => {
     const settings = store.get('settings', {})
     if (settings.minimizeToTray && tray) {
@@ -128,6 +126,7 @@ ipcMain.handle('window:maximize', () => {
 })
 ipcMain.handle('window:close', () => mainWindow?.close())
 ipcMain.handle('window:isMaximized', () => mainWindow?.isMaximized() ?? false)
+ipcMain.handle('window:toggleDevTools', () => mainWindow?.webContents.toggleDevTools())
 
 app.whenReady().then(() => {
   createWindow()

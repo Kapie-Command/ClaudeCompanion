@@ -148,10 +148,10 @@ export const useStore = create((set, get) => ({
   },
 
   // Copy action (combines template + context blocks + variables + history)
-  copyTemplate: async (templateBody) => {
+  copyTemplate: async (templateBody, { autoName = false } = {}) => {
     const vars = get().getAllVariables()
     const activeBlocks = get().getActiveContextBlocks()
-    const text = buildCopyText(templateBody, vars, activeBlocks)
+    const text = buildCopyText(templateBody, vars, activeBlocks, { autoName })
     await api.clipboard.write(text)
     get().addToClipboardHistory(text)
     return text

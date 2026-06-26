@@ -11,12 +11,13 @@ export default function TemplateCard({ template, onEdit }) {
   const deleteTemplate = useStore(s => s.deleteTemplate)
   const [flash, setFlash] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
+  const [autoName, setAutoName] = useState(false)
 
   const preview = interpolate(template.body, variables)
   const hasUnfilled = preview.includes('{{')
 
   const handleCopy = async () => {
-    await copyTemplate(template.body)
+    await copyTemplate(template.body, { autoName: hasUnfilled && autoName })
     setFlash(true)
     setTimeout(() => setFlash(false), 400)
   }
@@ -86,7 +87,28 @@ export default function TemplateCard({ template, onEdit }) {
         {preview}
       </p>
       {hasUnfilled && (
-        <p className="text-[10px] text-warning/60 mt-1">Has unfilled variables</p>
+        <div className="flex items-center gap-2 mt-1.5">
+          <button
+            onClick={() => setAutoName(!autoName)}
+            className={`flex items-center gap-1.5 text-[10px] rounded-full px-2 py-0.5 transition-colors ${
+              autoName
+                ? 'bg-accent/20 text-accent border border-accent/30'
+                : 'bg-surface-3 text-text-muted border border-border hover:border-border-hover hover:text-text-secondary'
+            }`}
+            title="When enabled, Claude will choose appropriate values for unfilled variables"
+          >
+            <span className={`w-2.5 h-2.5 rounded-full border transition-colors ${
+              autoName ? 'bg-accent border-accent' : 'border-text-muted'
+            }`} />
+            Auto-name
+          </button>
+          {!autoName && (
+            <span className="text-[10px] text-warning/60">Unfilled variables</span>
+          )}
+          {autoName && (
+            <span className="text-[10px] text-accent/60">Claude will choose values</span>
+          )}
+        </div>
       )}
     </div>
   )

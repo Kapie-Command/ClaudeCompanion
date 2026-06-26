@@ -14,6 +14,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     maximize: () => ipcRenderer.invoke('window:maximize'),
     close: () => ipcRenderer.invoke('window:close'),
     isMaximized: () => ipcRenderer.invoke('window:isMaximized'),
+    toggleDevTools: () => ipcRenderer.invoke('window:toggleDevTools'),
     onMaximized: (cb) => {
       const handler = (_e, val) => cb(val)
       ipcRenderer.on('window:maximized', handler)
