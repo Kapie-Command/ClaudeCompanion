@@ -7,7 +7,9 @@ export default function ChainRunner() {
   const activeChainId = useStore(s => s.activeChainId)
   const chainStepIndex = useStore(s => s.chainStepIndex)
   const templates = useStore(s => s.templates)
-  const variables = useStore(s => s.getAllVariables())
+  const builtInVars = useStore(s => s.variables)
+  const customVars = useStore(s => s.customVariables)
+  const variables = { ...builtInVars, ...customVars }
   const copyTemplate = useStore(s => s.copyTemplate)
   const advanceChain = useStore(s => s.advanceChain)
   const resetChain = useStore(s => s.resetChain)

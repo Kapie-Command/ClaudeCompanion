@@ -3,7 +3,9 @@ import { useStore } from '../store/useStore'
 import { interpolate } from '../lib/templateEngine'
 
 export default function TemplateCard({ template, onEdit }) {
-  const variables = useStore(s => s.getAllVariables())
+  const builtInVars = useStore(s => s.variables)
+  const customVars = useStore(s => s.customVariables)
+  const variables = { ...builtInVars, ...customVars }
   const copyTemplate = useStore(s => s.copyTemplate)
   const togglePin = useStore(s => s.togglePin)
   const deleteTemplate = useStore(s => s.deleteTemplate)

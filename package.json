@@ -2,7 +2,7 @@
   "name": "claude-companion",
   "version": "1.0.0",
   "description": "Desktop companion tool for Claude Code workflows — quick-copy prompt templates, variable interpolation, prompt chains.",
-  "main": "electron/main.js",
+  "main": "./dist/main/main.js",
   "scripts": {
     "dev": "electron-vite dev",
     "build": "electron-vite build",

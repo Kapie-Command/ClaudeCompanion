@@ -6,7 +6,9 @@ import { extractVariables, interpolate } from '../lib/templateEngine'
 export default function TemplateEditor({ template, onClose }) {
   const addTemplate = useStore(s => s.addTemplate)
   const updateTemplate = useStore(s => s.updateTemplate)
-  const variables = useStore(s => s.getAllVariables())
+  const builtInVars = useStore(s => s.variables)
+  const customVars = useStore(s => s.customVariables)
+  const variables = { ...builtInVars, ...customVars }
 
   const [title, setTitle] = useState(template?.title || '')
   const [body, setBody] = useState(template?.body || '')
