@@ -25,6 +25,13 @@ export default function App() {
     return api.quickAccess.onToggle(() => setQuickAccessOpen(v => !v))
   }, [])
 
+  const addToClipboardHistory = useStore(s => s.addToClipboardHistory)
+  useEffect(() => {
+    const api = window.electronAPI
+    if (!api?.clipboard?.onPopupCopy) return
+    return api.clipboard.onPopupCopy((text) => addToClipboardHistory(text))
+  }, [addToClipboardHistory])
+
   const openEditor = (template = null) => {
     setEditingTemplate(template)
     setEditorOpen(true)

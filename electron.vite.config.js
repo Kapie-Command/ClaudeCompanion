@@ -20,7 +20,10 @@ export default defineConfig({
     build: {
       outDir: 'dist/preload',
       rollupOptions: {
-        input: resolve(__dirname, 'electron/preload.js')
+        input: {
+          preload: resolve(__dirname, 'electron/preload.js'),
+          popupPreload: resolve(__dirname, 'electron/popupPreload.js')
+        }
       }
     }
   },

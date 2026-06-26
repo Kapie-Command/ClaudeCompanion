@@ -6,14 +6,19 @@ contextBridge.exposeInMainWorld('electronAPI', {
     set: (key, value) => ipcRenderer.invoke('store:set', key, value),
     getAll: () => ipcRenderer.invoke('store:getAll')
   },
-  clipboard: {
-    write: (text) => ipcRenderer.invoke('clipboard:write', text)
-  },
   quickAccess: {
     onToggle: (cb) => {
       const handler = () => cb()
       ipcRenderer.on('quick-access:toggle', handler)
       return () => ipcRenderer.removeListener('quick-access:toggle', handler)
+    }
+  },
+  clipboard: {
+    write: (text) => ipcRenderer.invoke('clipboard:write', text),
+    onPopupCopy: (cb) => {
+      const handler = (_e, text) => cb(text)
+      ipcRenderer.on('clipboard:fromPopup', handler)
+      return () => ipcRenderer.removeListener('clipboard:fromPopup', handler)
     }
   },
   window: {
