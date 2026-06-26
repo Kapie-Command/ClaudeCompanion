@@ -148,6 +148,15 @@ app.whenReady().then(() => {
       })
     } catch (_) {}
   }
+
+  try {
+    globalShortcut.register('CommandOrControl+Shift+C', () => {
+      if (!mainWindow) return
+      mainWindow.show()
+      mainWindow.focus()
+      mainWindow.webContents.send('quick-access:toggle')
+    })
+  } catch (_) {}
 })
 
 app.on('window-all-closed', () => {

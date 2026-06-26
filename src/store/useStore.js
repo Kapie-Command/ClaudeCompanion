@@ -81,6 +81,16 @@ export const useStore = create((set, get) => ({
     persist('templates', templates)
   },
 
+  toggleFavorite: (id) => {
+    const templates = get().templates.map(t =>
+      t.id === id ? { ...t, isFavorited: !t.isFavorited } : t
+    )
+    set({ templates })
+    persist('templates', templates)
+  },
+
+  getFavorites: () => get().templates.filter(t => t.isFavorited).slice(0, 6),
+
   // Context blocks
   contextBlocks: defaultContextBlocks,
 

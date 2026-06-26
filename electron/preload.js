@@ -9,6 +9,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
   clipboard: {
     write: (text) => ipcRenderer.invoke('clipboard:write', text)
   },
+  quickAccess: {
+    onToggle: (cb) => {
+      const handler = () => cb()
+      ipcRenderer.on('quick-access:toggle', handler)
+      return () => ipcRenderer.removeListener('quick-access:toggle', handler)
+    }
+  },
   window: {
     minimize: () => ipcRenderer.invoke('window:minimize'),
     maximize: () => ipcRenderer.invoke('window:maximize'),

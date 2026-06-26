@@ -8,6 +8,7 @@ export default function TemplateCard({ template, onEdit }) {
   const variables = { ...builtInVars, ...customVars }
   const copyTemplate = useStore(s => s.copyTemplate)
   const togglePin = useStore(s => s.togglePin)
+  const toggleFavorite = useStore(s => s.toggleFavorite)
   const deleteTemplate = useStore(s => s.deleteTemplate)
   const [flash, setFlash] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
@@ -30,6 +31,7 @@ export default function TemplateCard({ template, onEdit }) {
       <div className="flex items-start justify-between gap-2 mb-2">
         <div className="flex items-center gap-2 min-w-0">
           <h3 className="text-sm font-medium text-text-primary truncate">{template.title}</h3>
+          {template.isFavorited && <span className="text-accent text-xs shrink-0">♥</span>}
           {template.isPinned && <span className="text-warning text-xs shrink-0">★</span>}
         </div>
 
@@ -55,6 +57,12 @@ export default function TemplateCard({ template, onEdit }) {
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setShowMenu(false)} />
                 <div className="absolute right-0 top-full mt-1 bg-surface-3 border border-border rounded-md shadow-lg py-1 z-20 w-32">
+                  <button
+                    onClick={() => { toggleFavorite(template.id); setShowMenu(false) }}
+                    className="w-full text-left px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-2 hover:text-text-primary"
+                  >
+                    {template.isFavorited ? '★ Unfavorite' : '☆ Favorite'}
+                  </button>
                   <button
                     onClick={() => { togglePin(template.id); setShowMenu(false) }}
                     className="w-full text-left px-3 py-1.5 text-xs text-text-secondary hover:bg-surface-2 hover:text-text-primary"
