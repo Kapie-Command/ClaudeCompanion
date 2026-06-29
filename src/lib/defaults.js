@@ -71,6 +71,7 @@ export const defaultContextBlocks = [
 ]
 
 export const categories = [
+  { key: 'favorites', label: 'Favorites', color: '#ef4444' },
   { key: 'session', label: 'Session', color: '#7c6bf5' },
   { key: 'workflow', label: 'Workflow', color: '#4ade80' },
   { key: 'guardrails', label: 'Guardrails', color: '#fbbf24' },
