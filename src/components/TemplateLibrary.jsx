@@ -9,7 +9,7 @@ export default function TemplateLibrary({ onEdit, onNew }) {
   const setActiveCategory = useStore(s => s.setActiveCategory)
 
   const filtered = templates
-    .filter(t => t.category === activeCategory)
+    .filter(t => activeCategory === 'favorites' ? t.isFavorited : t.category === activeCategory)
     .sort((a, b) => {
       if (a.isPinned && !b.isPinned) return -1
       if (!a.isPinned && b.isPinned) return 1
@@ -48,10 +48,13 @@ export default function TemplateLibrary({ onEdit, onNew }) {
       <div className="flex-1 overflow-y-auto p-4">
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-text-muted">
-            <p className="text-sm">No templates in this category</p>
-            <button onClick={onNew} className="text-xs text-accent mt-2 hover:text-accent-hover">
-              Create one
-            </button>
+            <p className="text-sm">{activeCategory === 'favorites' ? 'No favorites yet' : 'No templates in this category'}</p>
+            <p className="text-xs mt-1">{activeCategory === 'favorites' ? 'Right-click a template and select "Favorite" to add it here' : null}</p>
+            {activeCategory !== 'favorites' && (
+              <button onClick={onNew} className="text-xs text-accent mt-2 hover:text-accent-hover">
+                Create one
+              </button>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
